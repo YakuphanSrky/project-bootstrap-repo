@@ -5,7 +5,7 @@
 
 | Alan | Değer |
 |---|---|
-| **Durum** | Proposed |
+| **Durum** | Accepted |
 | **Tarih** | 2026-08-18 |
 | **Karar verenler** | Yakuphan Sarikaya |
 | **İlgili issue** | — (bkz. Takipler) |
@@ -160,7 +160,7 @@ Bu ADR hiçbir kararı geçersiz kılmıyor — ilk ADR. Bölüm bilinçli olara
 
 ## Takipler
 
-- [ ] `CLAUDE.md` §5, D3 ve D8 ile güncellenecek — bu PR'ın kapsamında.
+- [x] `CLAUDE.md` §5, D3 ve D8 ile güncellendi (PR #2).
 - [ ] **ADR-0002 — Kapsam ve problem sahipliği.** `.notes/baglam.md` AS1 burada kapanır.
 - [ ] **`SKILL.md` Faz 1 kod projesi varsayıyor.** Önerdiği çekirdek ADR seti stack / veritabanı
       / auth / dizin / kalite standardı — bu deponun hiçbirinde karşılığı yok. Skill'i kendine
