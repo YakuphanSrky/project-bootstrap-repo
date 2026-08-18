@@ -1,0 +1,97 @@
+<!-- SPDX-License-Identifier: {{LISANS_SPDX}} -->
+<!-- Copyright (c) {{YIL}} {{TELIF_SAHIBI}} -->
+
+# ADR-{{NUMARA}} — {{BASLIK}}
+
+| Alan | Değer |
+|---|---|
+| **Durum** | Proposed \| Accepted \| Superseded by ADR-XXXX \| Deprecated \| Suspended |
+| **Tarih** | {{TARIH}} |
+| **Karar verenler** | {{KARAR_VERENLER}} |
+| **İlgili issue** | #{{ISSUE_NO}} |
+| **Dayandığı ADR'ler** | ADR-XXXX (hangi maddesine) |
+| **Etkilediği ADR'ler** | ADR-XXXX D2 supersede edildi / yerinde revize edildi |
+
+---
+
+## Bağlam
+
+<!-- Bu kararı gerektiren durum nedir? Hangi sorun, hangi kısıt, hangi gözlem?
+     Karar değiştiğinde okunacak olan bölüm burasıdır — "ne yaptık" değil
+     "neden yaptık" yazılır. Mümkünse ölçüm/veri ile destekle. -->
+
+## Değerlendirilen seçenekler
+
+### Seçenek A — {{AD}}
+- **Artı:**
+- **Eksi:**
+
+### Seçenek B — {{AD}}
+- **Artı:**
+- **Eksi:**
+
+### Neden A seçildi
+<!-- Elenen seçeneğin neden elendiğini yaz. Bu, aynı tartışmanın altı ay sonra
+     yeniden açılmasını önler. -->
+
+---
+
+## Kararlar
+
+Her karar numaralandırılır (D1, D2, …) — kısmi supersede ve koddan geri-referans
+bunu gerektirir.
+
+**D1.** <!-- Kararın kendisi, tek cümlede, net. -->
+
+**D2.** <!-- ... -->
+
+---
+
+## Kapsam dışı
+
+<!-- Bu kararın NEYİ kapsamadığı. Sınırları açıkça yazmak, kapsam kaymasını önler. -->
+
+- <!-- ör. Bu karar yalnız okuma yolunu kapsar; yazma yolu ADR-00XX'te -->
+
+---
+
+## Sonuçlar
+
+**Olumlu:**
+- <!-- Ne kazanıldı -->
+
+**Ödünler (bilinçli kabul edilenler):**
+- <!-- Neyden vazgeçildi. Gizlenmiş bir ödün, sonradan "hata" gibi görünür;
+       yazılı bir ödün ise bilinçli bir tercihtir. -->
+
+---
+
+## Kaldırılacaklar
+
+<!-- YALNIZ bu ADR başka bir kararı geçersiz kılıyorsa doldurulur.
+     Bu liste bir issue'ya dönüşür ve temizlik tamamlanmadan MR merge edilmez. -->
+
+Bu karar sonucu koddan silinmesi gerekenler:
+
+- [ ] `<alan/fonksiyon adı>` — `<dosya yolu>`
+- [ ] İlgili testler — `<test dosyası>`
+- [ ] Veritabanı sütunu (migration ile) — `<tablo.sütun>`
+- [ ] Dokümantasyon referansları — `<dosya>`
+
+---
+
+## Takipler
+
+<!-- Bu kararın açık bıraktığı, başka bir mercie taşınan veya ileride ele alınacak
+     kalemler. Kapanmamış bir borcu yazmak, unutmaktan iyidir. -->
+
+- [ ] <!-- ör. Kaynak dokümanın güncellenmesi — PM'e taşındı -->
+
+---
+
+## Doğrulama
+
+<!-- Bu kararın uygulandığı nasıl doğrulanır? Mümkünse sayısal/otomatik. -->
+
+- Test: `<test adı veya dosyası>`
+- Kod geri-referansı: `grep -rn "ADR-{{NUMARA}}" src/`

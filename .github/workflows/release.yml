@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+
+name: Release
+
+# Bir sürüm etiketi (v1.0.0 gibi) push edildiğinde çalışır.
+# Skill'i paketler ve .skill dosyasını release'e ekler.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  paketle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SKILL.md doğrula
+        # Frontmatter ilk satırda '---' ile başlamazsa skill yüklenmez.
+        run: |
+          if [ "$(head -1 project-bootstrap/SKILL.md)" != "---" ]; then
+            echo "HATA: SKILL.md frontmatter ile başlamıyor"
+            exit 1
+          fi
+          grep -q '^name:' project-bootstrap/SKILL.md || { echo "HATA: name alanı yok"; exit 1; }
+          grep -q '^description:' project-bootstrap/SKILL.md || { echo "HATA: description alanı yok"; exit 1; }
+          echo "SKILL.md geçerli"
+
+      - name: Paketle
+        run: |
+          cd project-bootstrap
+          zip -r ../project-bootstrap.skill . -x '.*' -x '__MACOSX/*'
+          cd ..
+          unzip -l project-bootstrap.skill
+
+      - name: Release oluştur
+        uses: softprops/action-gh-release@v2
+        with:
+          files: project-bootstrap.skill
+          generate_release_notes: true
