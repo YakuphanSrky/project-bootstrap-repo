@@ -182,7 +182,7 @@ Sırayla, her biri ayrı issue + branch + PR:
    |---|---|---|---|
    | ~~0001~~ | ~~ADR disiplini~~ | retro | `adr-rehberi.md`, baglam K3+K4 |
    | 0002 | Kapsam ve problem sahipliği — AS1 burada kapanır | **yeni** | baglam §1, §5 |
-   | 0003 | Artefakt biçimi ve katman yapısı | retro | baglam K1 ← 0002 |
+   | 0003 | Artefakt biçimi, katman yapısı ve dağıtım | retro | baglam K1 + K8 ← 0002 |
    | 0004 | Etkileşim modeli + sınır: *gerçek fayda yoksa dayatma* | retro | baglam K5, K6 |
    | 0005 | Dil politikası | retro | baglam §2 |
    | 0006 | Lisans MIT + telif sahibi açık kalemi | retro | baglam K7 |
