@@ -1,0 +1,136 @@
+<!-- SPDX-License-Identifier: {{LISANS_SPDX}} -->
+<!-- Copyright (c) {{YIL}} {{TELIF_SAHIBI}} -->
+
+# CLAUDE.md — {{PROJE_ADI}}
+
+> Bu dosya Claude Code için proje bağlamını ve çalışma kurallarını tanımlar.
+> **Yalnız güncel durumu** anlatır; kararların tarihçesi `/docs/adr/` altında yaşar.
+
+---
+
+## 1. Proje Tanımı
+
+{{PROJE_TANIMI}}
+
+**Kapsam dışı (kesin sınırlar):**
+<!-- Bu bölümü ADR'ler netleştikçe doldur. Neyin bu projede OLMADIĞINI yazmak,
+     neyin olduğunu yazmaktan daha çok tartışma önler. -->
+- <!-- ör. Ödeme akışı bu projede değil, X servisinde -->
+
+---
+
+## 2. Ortam ve Artefakt
+
+- **Teknoloji / implementasyon ortamı:** {{TECH_STACK}}
+- **Veritabanı:** {{VERITABANI}}
+- **Yetki sınırı:** {{AUTH_SINIRI}}
+  <!-- Gerçek erişim sınırının hangi katmanda olduğunu açıkça yaz.
+       Uygulama içi filtreleme bir güvenlik sınırı DEĞİLDİR. -->
+- **Depo:** {{REPO_URL}}
+- **Platform:** {{VCS_PLATFORM}}
+- **Tek geçerli bilgi kaynağı:** bu deponun `main` branch'i
+
+---
+
+## 3. Lisans ve Telif
+
+- **SPDX:** `{{LISANS_SPDX}}`
+- **Telif sahibi:** {{TELIF_SAHIBI}}
+
+Üretilen **her** kaynak dosya (`.md` dahil) lisans başlığı taşır:
+
+```
+{{LISANS_BASLIK_ORNEGI}}
+```
+
+Lisans metinleri `LICENSES/` dizinindedir.
+
+---
+
+## 4. İş Akışı
+
+Her implementasyon zorunlu olarak şu zinciri izler:
+
+```
+issue → branch (issue slug ile) → commit(ler) → {{PR_VEYA_MR}}
+```
+
+- Branch adı: `{issue-no}-{kısa-ingilizce-kebab}` — ör. `12-add-user-export`
+- **`main`'e doğrudan commit yok.** `main` korumalıdır.
+- {{PR_VEYA_MR}}'lar insan tarafından onaylanıp kapatılır — otomatik merge edilmez.
+- {{PR_VEYA_MR}} açıklaması: `Closes #N` + yapılan değişikliğin gerekçesi.
+
+---
+
+## 5. Kod Kalitesi
+
+- Kod, **ISO/IEC 5055:2021** dört sütununa (Reliability, Security, Performance
+  Efficiency, Maintainability) uygun yazılır.
+- **Mimari kararlara (ADR) sadık kalınır.** Kapanmamış bir ADR üzerine implementasyona
+  başlanmaz.
+- Bir ADR'ye dayanan kod, greplenebilir geri-referans taşır: `// ADR-0001 D2`
+
+**Doğrulama komutları:**
+
+```bash
+{{KALITE_KOMUTLARI}}
+```
+
+---
+
+## 6. Dizin Yapısı
+
+**Mimari Karar Kayıtları:** `/docs/adr/`
+**Kişisel çalışma alanı:** `.notes/` (`.gitignore`'da — depoya girmez, yedeklenmez)
+
+{{DIZIN_SEMASI}}
+
+Boş dizin açılmaz; her biri ihtiyaç doğduğunda oluşur.
+
+---
+
+## 7. Commit ve Dil Standartları
+
+- **Prose dili:** Türkçe (issue/{{PR_VEYA_MR}} başlıkları, açıklamalar, commit gövdesi)
+- **Makine sınırı İngilizce kalır:** SPDX kimlikleri, dosya/dizin/branch adları,
+  YAML anahtarları, Conventional Commits tip token'ı
+- **Commit mesajları:** [Conventional Commits](https://www.conventionalcommits.org/) —
+  tip token'ı İngilizce (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`), gövde Türkçe
+  ve **neden**'i anlatır
+- İlgili issue'lara `Refs` veya `Closes` ile referans ver
+- **AI ile üretilen her commit** şu satırı içerir:
+
+  ```
+  Bu iş [AI Model] / [AI Company] / [AI Tool] ile hazırlanmıştır; sorumluluk insandadır.
+  ```
+
+**Örnek commit:**
+
+```
+feat(export): kullanıcı dışa aktarma uç noktası ekle
+
+Dışa aktarma senkron yapıldı çünkü beklenen kayıt sayısı ADR-0004'te
+belirlenen eşiğin altında; kuyruk altyapısı gereksiz karmaşıklık getirirdi.
+
+Closes #12
+
+Bu iş [AI Model] / [AI Company] / [AI Tool] ile hazırlanmıştır; sorumluluk insandadır.
+```
+
+---
+
+## 8. Hızlı Kontrol Listesi
+
+Bir işe başlamadan önce doğrula:
+
+- [ ] İlgili **ADR onaylı (Accepted)** mı? Değilse implementasyona başlama.
+- [ ] İş, §1'deki **kapsam sınırları** içinde mi?
+- [ ] Bir **issue** var mı? Yoksa önce issue.
+- [ ] Branch `{issue-no}-{kebab}` ile mi oluşturuldu? `main`'e doğrudan commit yok.
+- [ ] Dosya **doğru dizinde** mi?
+- [ ] Dosya **lisans başlığını** içeriyor mu?
+- [ ] Bir ADR'ye dayanıyorsa **geri-referans etiketi** var mı?
+- [ ] Eşik/kural ekliyorsan **testi** var mı?
+- [ ] Commit mesajı **Conventional Commits** + `Refs/Closes` + AI atıf satırı içeriyor mu?
+- [ ] Bir karar kaldırıldıysa **Kaldırılacaklar listesi** tamamlandı mı?
+- [ ] {{PR_VEYA_MR}} açıldıysa: **merge etme**, insan onayını bekle.
