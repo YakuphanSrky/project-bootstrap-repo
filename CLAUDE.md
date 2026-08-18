@@ -87,11 +87,26 @@ issue → branch ({issue-no}-{kısa-ingilizce-kebab}) → commit(ler) → Pull R
 
 ## 5. Kararlar ve Kalite
 
-- Mimari kararlar `/docs/adr/` altında ADR olarak kayda geçer.
-- **Kapanmamış (Accepted olmamış) bir ADR üzerine implementasyona başlanmaz.**
-- Numara blokları: `ADR-0001`–`ADR-0009` çekirdek, `ADR-0010`+ feature.
+Bu deponun ADR disiplini [`ADR-0001`](docs/adr/ADR-0001-adr-discipline.md) ile bağlanmıştır;
+aşağıdakiler onun özetidir, gerekçesi orada.
+
+- Mimari kararlar `docs/adr/` altında ADR olarak kayda geçer.
+- **Kapanmamış (Accepted olmamış) bir ADR üzerine implementasyona başlanmaz.** (D1)
+- Format kaynağı `project-bootstrap/assets/ADR.md.template`; ayrışırsa **şablon kaynaktır**. (D2)
+- Dosya adı: `docs/adr/ADR-NNNN-{kısa-ingilizce-kebab}.md` — dosya adı makine sınırıdır,
+  İngilizce; başlık ve gövde Türkçe. (D3)
+- Numara blokları: `ADR-0001`–`ADR-0009` çekirdek, `ADR-0010`+ feature. (D4)
+- Durum döngüsü: `Proposed → Accepted → (Superseded | Deprecated | Suspended)`.
+  `Suspended` ≠ `Superseded`. (D5)
+- Hedef `Proposed` ise yerinde revizyon, `Accepted` ise supersede zinciri; kısmi supersede
+  madde numarasıyla yazılır. (D6)
+- Bir kararı geçersiz kılan ADR, **Kaldırılacaklar listesi** içerir; liste issue'ya dönüşür,
+  temizlik bitmeden merge edilmez. (D7)
+- **Geri-referans etiketi:** kodda `// ADR-NNNN DN`, markdown'da `<!-- ADR-NNNN DN -->`.
+  Etiket madde numarasını içerir — kısmi supersede madde düzeyinde işlediği için ADR numarası
+  tek başına yetmez. (D8)
+- Çekirdek bir ADR değişirse **drift audit** tetiklenir. (D9)
 - Skill'in davranışını değiştiren her PR gerekçesini açıklar.
-- Bir kararı geçersiz kılan ADR, **Kaldırılacaklar listesi** içerir.
 
 ---
 
@@ -101,7 +116,7 @@ issue → branch ({issue-no}-{kısa-ingilizce-kebab}) → commit(ler) → Pull R
 project-bootstrap-repo/
 ├── .github/workflows/release.yml
 ├── docs/
-│   └── adr/                        # henüz yok — §8/2 ile kurulacak
+│   └── adr/                        # kararlar — ADR-0001'den itibaren
 ├── project-bootstrap/              # SKILL — asıl artefakt
 │   ├── SKILL.md
 │   ├── references/
@@ -160,25 +175,32 @@ ls CLAUDE.md                           # büyük harfle var mı
 Sırayla, her biri ayrı issue + branch + PR:
 
 1. ~~**Yapıyı düzelt** (§7)~~ — tamam.
-2. **`docs/adr/` oluştur, çekirdek ADR'leri retroaktif yaz.** Kararlar alındı ama kayda
-   geçmedi; gerekçeleri `.notes/baglam.md` §3'te hazır:
-   - `ADR-0001` — Artefakt biçimi: referans katmanlı Agent Skill (baglam K1)
-   - `ADR-0002` — Dağıtım: kaynak repoda, `.skill` release'te (baglam K8)
-   - `ADR-0003` — Dil politikası: prose Türkçe, makine sınırı İngilizce (baglam §2)
-   - `ADR-0004` — Lisans: MIT (baglam K7)
-   - `ADR-0005` — Etkileşim modeli: aşamalı sorgulama + "gerçek bedel yoksa sorma"
-     (baglam K5, K6)
+2. **Çekirdek ADR'ler.** Blok `ADR-0001`–`ADR-0009`; iki karar yeni, beşi retroaktif
+   (gerekçeleri `.notes/baglam.md` §3'te hazır):
+
+   | No | Karar | Tür | Dayanak |
+   |---|---|---|---|
+   | ~~0001~~ | ~~ADR disiplini~~ | retro | `adr-rehberi.md`, baglam K3+K4 |
+   | 0002 | Kapsam ve problem sahipliği — AS1 burada kapanır | **yeni** | baglam §1, §5 |
+   | 0003 | Artefakt biçimi ve katman yapısı | retro | baglam K1 ← 0002 |
+   | 0004 | Etkileşim modeli + sınır: *gerçek fayda yoksa dayatma* | retro | baglam K5, K6 |
+   | 0005 | Dil politikası | retro | baglam §2 |
+   | 0006 | Lisans MIT + telif sahibi açık kalemi | retro | baglam K7 |
+   | 0007 | Doğrulama standardı — skill nasıl test edilir | **yeni** | ← 0002, 0003, 0004 |
+   | 0008–0009 | rezerve | — | — |
+
+   Dalgalar: **0002** → **0003 + 0007** → **0004 + 0005 + 0006** (üçü düşük tartışmalı,
+   §9'daki "gerçek bedel yoksa sorma" uyarınca tek PR).
 
    Şablon: `project-bootstrap/assets/ADR.md.template`
-   Disiplin: `project-bootstrap/references/adr-rehberi.md`
+   Disiplin: `docs/adr/ADR-0001-adr-discipline.md`
 
-3. **AS1'i karara bağla** — skill üçe bölünecek mi? (`.notes/baglam.md` §5). Bölünürse bu
-   bir çekirdek ADR'dir ve `ADR-0001`'i etkiler. **Test'ten önce karara bağlanmalı**,
-   yoksa bölünecek bir yapıyı test etmiş oluruz.
+3. **AS1 `ADR-0002`'nin konusudur** — skill üçe bölünecek mi? (`.notes/baglam.md` §5).
+   **Test'ten önce karara bağlanmalı**, yoksa bölünecek bir yapıyı test etmiş oluruz.
 4. **Skill'i test et** — 2-3 gerçekçi prompt, çıktı değerlendirmesi, düzeltme.
 5. **İlk release** — `git tag v0.1.0 && git push --tags`; workflow'u doğrula.
-6. **README'deki `<kullanıcı>`** yer tutucusunu gerçek kullanıcı adıyla değiştir
-   (`README.md`, Kurulum → Claude Code bölümündeki `git clone` satırı).
+6. ~~**README'deki `<kullanıcı>`** yer tutucusu~~ — tamam; depo adı da düzeltildi
+   (`project-bootstrap` → `project-bootstrap-repo`).
 
 ---
 
@@ -199,10 +221,11 @@ Skill aşamalı çalışmayı öğütlüyor; **onu geliştirirken de aynısını
 ## 10. Hızlı Kontrol Listesi
 
 - [x] Yapı §6'ya uygun mu? (bkz. §7)
-- [ ] İlgili ADR **Accepted** mi? Değilse implementasyona başlama.
+- [ ] İlgili ADR **Accepted** mi? Değilse implementasyona başlama. (ADR-0001 D1)
 - [ ] Bir **issue** var mı? Yoksa önce issue.
 - [ ] Branch `{issue-no}-{kebab}` ile mi? `main`'e doğrudan commit yok.
 - [ ] Dosya **lisans başlığını** içeriyor mu? `SKILL.md`'de frontmatter'dan sonra mı?
+- [ ] Bir ADR'ye dayanıyorsa **geri-referans etiketi** var mı? (ADR-0001 D8)
 - [ ] `.skill` dosyası depoya girmiyor mu?
 - [ ] Bir karar değiştiyse `.notes/baglam.md` güncellendi mi?
 - [ ] PR açıldıysa: **merge etme**, insan onayını bekle.
