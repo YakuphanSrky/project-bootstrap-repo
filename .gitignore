@@ -1,0 +1,12 @@
+# Derleme çıktısı — release ile otomatik üretilir, depoya girmez
+*.skill
+
+# Kişisel çalışma alanı
+.notes/
+
+# İşletim sistemi / editör
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
